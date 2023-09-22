@@ -1,6 +1,7 @@
 package ru.iteco.fmhandroid.ui.tests.authorization;
 
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -12,8 +13,9 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
-import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 
 
 @LargeTest
@@ -25,9 +27,19 @@ public class SuccessfulAuthorizationTests {
             new ActivityTestRule<>(AppActivity.class);
 
 
+
     @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+
+    public void waitElement() throws InterruptedException {
+
+        AboutAppSteps.waitIdEnterButton();// предполагается, что мы не авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
     }
 
     @Test
@@ -35,8 +47,8 @@ public class SuccessfulAuthorizationTests {
 
     public void successfulAuthorizationTest() throws InterruptedException {
 
-        AuthorizationSteps.logIn();
-        AuthorizationSteps.verificationOfSuccessfulAuthorization();
+        DataHelper.logIn();
+        AboutAppSteps.waitIdElementMenu();
         AuthorizationSteps.logOut();
 
     }
@@ -46,9 +58,8 @@ public class SuccessfulAuthorizationTests {
 
     public void logOutTest() throws InterruptedException {
 
-        AuthorizationSteps.logIn();
-        ButtonSteps.imageButtonLogOut();
-        ButtonSteps.buttonLogOut();
+        DataHelper.logIn();
+        AuthorizationSteps.logOut();
         AuthorizationSteps.isAuthorizationScreen();
 
     }

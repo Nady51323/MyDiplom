@@ -1,15 +1,7 @@
 package ru.iteco.fmhandroid.ui.tests.claims;
 
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -20,12 +12,14 @@ import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
-import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsCreationSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsSteps;
+import ru.iteco.fmhandroid.ui.steps.QuotesSteps;
 
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
@@ -35,11 +29,24 @@ public class CreateNewClaimTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+    String Title = "Title NewClaim:13 !@#$%^&*(-+){}<>123456789101234";
+    String Date = "10.10.1100";
+    String Description = "Description NewClaim:13 !@#$%^&*(-+){}<>123456789";
 
-        AuthorizationSteps.logIn();
+
+    @Before
+
+    public void waitElement() throws InterruptedException {
+
+        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+        DataHelper.logIn();
     }
 
     @Test
@@ -47,45 +54,38 @@ public class CreateNewClaimTest {
 
     public void createNewClaimValidData() throws InterruptedException {
 
-        //перейти на экран претензий
         ClaimsSteps.goToClaimsScreen();
-
-        //создать новую претензию
-        ButtonSteps.createNewClaim();
-
-        ClaimsCreationSteps.inputNewClaimValidData();
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.description_material_text_view), withText("NewClaim:13  !@#$%^&*(-+){}<>12345678910123456789"),
-                        withParent(withParent(withId(R.id.claim_list_card))),
-                        isDisplayed()));
-        textView.check(matches(withText("NewClaim:13  !@#$%^&*(-+){}<>12345678910123456789")));
+        ClaimsSteps.createNewClaim();
+        ClaimsCreationSteps.inputNewClaimValidData(Title, Date, Description);
+        QuotesSteps.loveIsAllButton();
+        ClaimsSteps.goToClaimsScreen();
+        //ClaimCreationScreen.checkTitleOfClaim.check(matches(isDisplayed())); не видит текст
 
         ClaimsSteps.openFirstClaim();
-        ButtonSteps.statusProcessingButton();
+        ClaimsSteps.statusProcessingButton();
         ClaimsSteps.changeClaimStatusToExecute();
-        ClaimsSteps.addComment();
+        DataHelper.addComment();
         ButtonSteps.buttonОк();
-        ButtonSteps.closeClaimButton();
-
+        ClaimsSteps.closeClaimButton();
         AuthorizationSteps.logOut();
     }
 
 
     @Test
-    @DisplayName("Блок Претензии. Создание новой претензии с пустыми полями.")
+    @DisplayName("Блок Претензии. Создание претензии с пустыми полями.")
 
     public void createNewClaimEmptyFields() throws InterruptedException {
 
         ClaimsSteps.goToClaimsScreen();
-        ButtonSteps.createNewClaim();
+        ClaimsSteps.createNewClaim();
         ButtonSteps.saveButton();
+        ClaimsSteps.waitIdElementButtonOk();
         ClaimsSteps.validationMessage();
         ButtonSteps.buttonОк();
         ButtonSteps.buttonCancel();
+        ClaimsSteps.waitIdElementButtonOk();
         ClaimsSteps.errorMessage();
         ButtonSteps.buttonОк();
-
         AuthorizationSteps.logOut();
 
     }

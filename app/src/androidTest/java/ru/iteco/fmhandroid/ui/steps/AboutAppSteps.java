@@ -8,73 +8,49 @@ import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static ru.iteco.fmhandroid.utils.CustomViewActions.waitDisplayed;
 
 import android.content.Intent;
 
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.intent.Intents;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.screenElements.AboutAppScreen;
+import ru.iteco.fmhandroid.ui.screenElements.MainScreen;
 
 public class AboutAppSteps {
 
     public static void goToAboutScreen() throws InterruptedException {
 
-        //переход на экран о приложении
-
-        ViewInteraction clickMainMenuButton = onView(
-                allOf(withId(R.id.main_menu_image_button)));
-        clickMainMenuButton.check(matches(isDisplayed()));
-        clickMainMenuButton.perform(click());
-        Thread.sleep(500);
-
-        ViewInteraction clickAbout = onView(
-                anyOf(withText("About"), withText("О приложении")));
-        clickAbout.check(matches(isDisplayed()));
-        clickAbout.perform(click());
-        Thread.sleep(500);
+        Allure.step("Переход на экран 'О приложении'");
+        MainScreen.mainMenuButton.perform(click());
+        MainScreen.aboutOfMenu.check(matches(isDisplayed()));
+        MainScreen.aboutOfMenu.perform(click());
 
     }
 
     public static void goToPrivacyPolicy() throws InterruptedException {
 
-        ViewInteraction checkTextPrivacyPolicy = onView(
-                allOf(withId(R.id.about_privacy_policy_label_text_view)));
-        checkTextPrivacyPolicy.check(matches(isDisplayed()));
-
-        ViewInteraction privacyPolicyValue = onView(
-                allOf(withId(R.id.about_privacy_policy_value_text_view)));
-        privacyPolicyValue.check(matches(isDisplayed()));
-
+        Allure.step("Переход к политике конфиденциальности");
         Intents.init();
-        privacyPolicyValue.perform(click());
+        AboutAppScreen.privacyPolicyValue.perform(click());
 
     }
 
     public static void goToTermsOfUse() throws InterruptedException {
 
-        ViewInteraction checkTextTermsOfUse = onView(
-                allOf(withId(R.id.about_terms_of_use_label_text_view)));
-        checkTextTermsOfUse.check(matches(isDisplayed()));
-
-        ViewInteraction termsOfUseValue = onView(
-                allOf(withId(R.id.about_terms_of_use_value_text_view)));
-        termsOfUseValue.check(matches(isDisplayed()));
-
+        Allure.step("Переход к пользовательскому соглашению");
         Intents.init();
-        termsOfUseValue.perform(click());
+        AboutAppScreen.termsOfUseValue.perform(click());
 
     }
 
 
-    public static void checkTheSuccessfulTransitionToPrivacyPolicy() {
+    public static void checkTheSuccessfulTransitionToPrivacyPolicy() throws InterruptedException {
 
-        // проверка перехода на сайт с политикой конфиденциальности
-
+        Allure.step("Проверка перехода на сайт с политикой конфиденциальности");
         intended(hasData("https://vhospice.org/#/privacy-policy/"));
         intended(hasAction(Intent.ACTION_VIEW));
         Intents.release();
@@ -83,12 +59,22 @@ public class AboutAppSteps {
 
     public static void checkTheSuccessfulTransitionToTermsOfUse() {
 
-        // проверка перехода на сайт с пользовательским соглашением
-
+        Allure.step("Проверка перехода на сайт с пользовательским соглашением");
         intended(hasData("https://vhospice.org/#/terms-of-use"));
         intended(hasAction(Intent.ACTION_VIEW));
         Intents.release();
     }
+
+    public static void waitIdEnterButton() {
+        Allure.step("Ожидание отображения кнопки 'вход из приложение'");
+        onView(isRoot()).perform(waitDisplayed(R.id.enter_button, 10000));
+    }
+
+    public static void waitIdElementMenu() {
+        Allure.step("Ожидание отображения кнопки 'Меню'");
+        onView(isRoot()).perform(waitDisplayed( R.id.main_menu_image_button, 10000));
+    }
+
 
 }
 

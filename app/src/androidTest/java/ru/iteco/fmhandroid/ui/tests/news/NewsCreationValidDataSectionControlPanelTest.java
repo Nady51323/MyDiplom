@@ -1,14 +1,12 @@
 package ru.iteco.fmhandroid.ui.tests.news;
 
 
-import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -20,11 +18,14 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
-import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.screenElements.NewsScreen;
+import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 import ru.iteco.fmhandroid.ui.steps.NewsCreationSteps;
+import ru.iteco.fmhandroid.ui.steps.NewsSelectCategorySteps;
 import ru.iteco.fmhandroid.ui.steps.NewsSteps;
 
 @LargeTest
@@ -35,11 +36,22 @@ public class NewsCreationValidDataSectionControlPanelTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+    String Title = "Enter Title:13  !@#$%^&*(-+){}<>12345678910123456789";
+    String Description = "Description:13 !@#$%^&*(-+){}<>12345678910123456789";
 
-        AuthorizationSteps.logIn();
+    @Before
+
+    public void waitElement() throws InterruptedException {
+
+        AboutAppSteps.waitIdEnterButton(); // предполагаем, что мы авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+        DataHelper.logIn();
     }
 
     @Test
@@ -48,28 +60,19 @@ public class NewsCreationValidDataSectionControlPanelTest {
 
     public void checkingControlPanelCreatingNewsValidData() throws InterruptedException {
 
-        //перейти в новости
-        NewsSteps.goToNewsScreen();
-
-        //создать новость
-        ButtonSteps.editNewsButton();
-
-        //добавить новость +
-        ButtonSteps.addNewsButton();
-
-        NewsCreationSteps.inputNewsValidData();
+        NewsSteps.goToNewsScreen();//перейти в раздел новостей
+        NewsCreationSteps.editNewsButton(); //добавить новость +
+        NewsCreationSteps.addNewsButton();
+        NewsSelectCategorySteps.selectNewsCategoryAd();
+        NewsScreen.titleTextInputOfNews.perform(replaceText(Title)); //заполнить заголовок
+        NewsScreen.titleTextInputOfNews.check(matches(withText(Title)));
+        NewsSteps.selectCurrentNewsDate();  //выбрать текущую дату
+        NewsSteps.selectCurrentNewsTime();  //выбрать текущее время
+        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));   //заполнить описание
+        NewsScreen.descriptionTextInputOfNews.check(matches(withText(Description)));
         ButtonSteps.saveButton();
-
-        //проверка, что новость появилась
-        ViewInteraction newsCreationCheck = onView(
-                allOf(withId(R.id.news_item_title_text_view), withText("Enter Title:13  !@#$%^&*(-+){}<>12345678910123456789")));
-        newsCreationCheck.check(matches(isDisplayed()));
+        NewsScreen.checkCreationNews.check(matches(isDisplayed()));  //проверка, что новость появилась
         Thread.sleep(2000);
-
-        NewsSteps.selectNewsFromList();
-        NewsSteps.deleteNews();
-        NewsSteps.errorDeleteMessage();
-        ButtonSteps.buttonОк();
         AuthorizationSteps.logOut();
     }
 

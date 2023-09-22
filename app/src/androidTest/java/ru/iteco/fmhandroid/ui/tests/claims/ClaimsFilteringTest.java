@@ -1,13 +1,7 @@
 package ru.iteco.fmhandroid.ui.tests.claims;
 
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
-
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -19,10 +13,10 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
-import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
-import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsSteps;
 
 @LargeTest
@@ -34,9 +28,18 @@ public class ClaimsFilteringTest {
             new ActivityTestRule<>(AppActivity.class);
 
     @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
-        AuthorizationSteps.logIn();
+
+    public void waitElement() throws InterruptedException {
+
+        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+        DataHelper.logIn();
     }
 
 
@@ -47,29 +50,21 @@ public class ClaimsFilteringTest {
     public void claimsFilteringClickEveryCheckBox() throws InterruptedException {
 
         ClaimsSteps.goToClaimsScreen();
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxInProgressFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
-
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonOkFilter();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxOpenFiltersClaims();
         ClaimsSteps.checkBoxInProgressFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
-
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonOkFilter();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxInProgressFiltersClaims();
         ClaimsSteps.checkBoxExecutedFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
-
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonOkFilter();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxExecutedFiltersClaims();
         ClaimsSteps.checkBoxCancelledFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
-
+        ClaimsSteps.buttonOkFilter();
         AuthorizationSteps.logOut();
     }
 
@@ -80,13 +75,11 @@ public class ClaimsFilteringTest {
     public void claimsFilteringWithoutStatusSelection() throws InterruptedException {
 
         ClaimsSteps.goToClaimsScreen();
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxOpenFiltersClaims();
         ClaimsSteps.checkBoxInProgressFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
-        ButtonSteps.buttonRefresh();
-
+        ClaimsSteps.buttonOkFilter();
+        ClaimsSteps.buttonRefresh();
         AuthorizationSteps.logOut();
 
     }
@@ -99,49 +92,40 @@ public class ClaimsFilteringTest {
     public void claimsFilteringStatusOpen() throws InterruptedException {
 
         ClaimsSteps.goToClaimsScreen();
-        ButtonSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonFiltersClaims();
         ClaimsSteps.checkBoxInProgressFiltersClaims();
-        ButtonSteps.clickOkFilter();
-        Thread.sleep(1000);
+        ClaimsSteps.buttonOkFilter();
+        ClaimsSteps.buttonFiltersClaims();
+        ClaimsSteps.buttonOkFilter();
 
         // карточка 1
 
-        ViewInteraction clickOpenClaim1 = onView(
-                allOf(withId(R.id.claim_list_recycler_view)));
-        clickOpenClaim1.perform(actionOnItemAtPosition(0, click()));
-
+        ClaimsSteps.openFirstClaim();
+        Thread.sleep(2000);
         ClaimsSteps.checkClaimStatusOpen();
-        ButtonSteps.closeClaimButton();
+        ClaimsSteps.closeClaimButton();
 
-        //карточка 2
+        //карточка 2 // на второй карточке падает тест с ошибкой не находит текст
 
-        ViewInteraction clickOpenClaim2 = onView(
-                allOf(withId(R.id.claim_list_recycler_view)));
-        clickOpenClaim2.perform(actionOnItemAtPosition(1, click()));
-        Thread.sleep(1000);
-
+        ClaimsSteps.openSecondClaim();
+        Thread.sleep(2000);
         ClaimsSteps.checkClaimStatusOpen();
-        ButtonSteps.closeClaimButton();
-
+        ClaimsSteps.closeClaimButton();
 
         // карточка 3
 
-        ViewInteraction clickOpenClaim3 = onView(
-                allOf(withId(R.id.claim_list_recycler_view)));
-        clickOpenClaim3.perform(actionOnItemAtPosition(2, click()));
-
+        ClaimsSteps.openThirdClaim();
+        Thread.sleep(2000);
         ClaimsSteps.checkClaimStatusOpen();
-        ButtonSteps.closeClaimButton();
+        ClaimsSteps.closeClaimButton();
 
         //карточка 4
 
-        ViewInteraction clickOpenClaim4 = onView(
-                allOf(withId(R.id.claim_list_recycler_view)));
-        clickOpenClaim4.perform(actionOnItemAtPosition(3, click()));
-        Thread.sleep(1000);
+        ClaimsSteps.openFourthClaim();
+        Thread.sleep(2000);
 
         ClaimsSteps.checkClaimStatusOpen();
-        ButtonSteps.closeClaimButton();
+        ClaimsSteps.closeClaimButton();
 
         AuthorizationSteps.logOut();
 

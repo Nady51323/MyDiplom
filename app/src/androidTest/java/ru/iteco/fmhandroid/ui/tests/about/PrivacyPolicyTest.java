@@ -1,5 +1,6 @@
 package ru.iteco.fmhandroid.ui.tests.about;
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -11,6 +12,7 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 
@@ -24,18 +26,32 @@ public class PrivacyPolicyTest {
             new ActivityTestRule<>(AppActivity.class);
 
     @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+
+    public void waitElement() throws InterruptedException {
+
+        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
+
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+         DataHelper.logIn();
     }
+
+
 
     @Test
     @DisplayName("Блок О приложении. Переход к политике конфиденциальности.")
 
     public void goToPrivacyPolicy() throws InterruptedException {
 
-        AuthorizationSteps.logIn();
         AboutAppSteps.goToAboutScreen();
         AboutAppSteps.goToPrivacyPolicy();
         AboutAppSteps.checkTheSuccessfulTransitionToPrivacyPolicy();
     }
+
+
 }

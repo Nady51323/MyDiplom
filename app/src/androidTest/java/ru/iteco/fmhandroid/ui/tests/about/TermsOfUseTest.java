@@ -1,6 +1,7 @@
 package ru.iteco.fmhandroid.ui.tests.about;
 
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -12,7 +13,9 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
+import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
@@ -23,8 +26,19 @@ public class TermsOfUseTest {
             new ActivityTestRule<>(AppActivity.class);
 
     @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+
+    public void waitElement() throws InterruptedException {
+
+       AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+        DataHelper.logIn();
+
     }
 
 
@@ -33,7 +47,6 @@ public class TermsOfUseTest {
 
     public void goToTermsOfUse() throws InterruptedException {
 
-        //AuthorizationSteps.logIn();
         AboutAppSteps.goToAboutScreen();
         AboutAppSteps.goToTermsOfUse();
         AboutAppSteps.checkTheSuccessfulTransitionToTermsOfUse();

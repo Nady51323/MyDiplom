@@ -1,15 +1,10 @@
 package ru.iteco.fmhandroid.ui.tests.ThematicQuotes;
 
 
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
 
-import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
@@ -21,10 +16,12 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
-import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.screenElements.QuotesScreen;
+import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
-import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
+import ru.iteco.fmhandroid.ui.steps.QuotesSteps;
 
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
@@ -36,10 +33,17 @@ public class ThematicQuotesTest {
 
 
     @Before
-    public void ThreadSleep() throws InterruptedException {
-        Thread.sleep(7000);
+    public void waitElement() throws InterruptedException {
 
-        AuthorizationSteps.logIn();
+        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
+
+        try {
+            AuthorizationSteps.isAuthorizationScreen();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.logOut();
+        }
+
+        DataHelper.logIn();
     }
 
     @Test
@@ -48,19 +52,11 @@ public class ThematicQuotesTest {
 
     public void checkingForQuotesInBlockTest() throws InterruptedException {
 
-        ButtonSteps.buttonLoveIsAll();
-
-        ViewInteraction checkTextLoveIsAll = onView(
-                anyOf(withText("Love is all"), withText("Главное - жить любя")));
-        checkTextLoveIsAll.check(matches(isDisplayed()));
-
-        ButtonSteps.listRecyclerOurMission();
-        ButtonSteps.listRecyclerOurMission();
-
-        ViewInteraction checkTextID = onView(
-                allOf(withId(R.id.our_mission_title_text_view)));
-        checkTextID.check(matches(isDisplayed()));
-
+        QuotesSteps.loveIsAllButton();
+        QuotesScreen.checkTextLoveIsAll.check(matches(isDisplayed()));
+        QuotesSteps.listRecyclerOurMission();
+        QuotesSteps.listRecyclerOurMission();
+        QuotesScreen.missionTitle.check(matches(isDisplayed()));
         AuthorizationSteps.logOut();
     }
 }
