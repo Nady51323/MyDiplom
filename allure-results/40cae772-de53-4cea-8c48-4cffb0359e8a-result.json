@@ -1,0 +1,88 @@
+{
+    "name": "Блок О приложении. Переход к пользовательскому соглашению.",
+    "start": 1696411634063,
+    "stop": 1696411642140,
+    "stage": "finished",
+    "description": null,
+    "descriptionHtml": null,
+    "status": "broken",
+    "statusDetails": {
+        "message": "Class 'org.hamcrest.StringDescription' does not implement interface 'java.lang.Iterable' in call to 'java.util.Iterator java.lang.Iterable.iterator()' (declaration of 'org.hamcrest.BaseDescription' appears in /data/app/ru.iteco.fmhandroid-o2x8C_TLQVtVPTKYQtcGVg==/base.apk!classes16.dex)",
+        "trace": "java.lang.IncompatibleClassChangeError: Class 'org.hamcrest.StringDescription' does not implement interface 'java.lang.Iterable' in call to 'java.util.Iterator java.lang.Iterable.iterator()' (declaration of 'org.hamcrest.BaseDescription' appears in /data/app/ru.iteco.fmhandroid-o2x8C_TLQVtVPTKYQtcGVg==/base.apk!classes16.dex)\n\tat org.hamcrest.BaseDescription.appendValueList(BaseDescription.java:81)\n\tat androidx.test.espresso.matcher.ViewMatchers.getMismatchDescriptionString(ViewMatchers.java:3)\n\tat androidx.test.espresso.matcher.ViewMatchers.assertThat(ViewMatchers.java:5)\n\tat androidx.test.espresso.assertion.ViewAssertions$MatchesViewAssertion.check(ViewAssertions.java:7)\n\tat androidx.test.espresso.ViewInteraction$SingleExecutionViewAssertion.check(ViewInteraction.java:2)\n\tat androidx.test.espresso.ViewInteraction$2.call(ViewInteraction.java:14)\n\tat androidx.test.espresso.ViewInteraction$2.call(ViewInteraction.java:1)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat android.os.Handler.handleCallback(Handler.java:883)\n\tat android.os.Handler.dispatchMessage(Handler.java:100)\n\tat android.os.Looper.loop(Looper.java:214)\n\tat android.app.ActivityThread.main(ActivityThread.java:7356)\n\tat java.lang.reflect.Method.invoke(Native Method)\n\tat com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)\n\tat com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)\n"
+    },
+    "steps": [
+        {
+            "name": "Ожидание отображения кнопки 'Меню'",
+            "start": 1696411635183,
+            "stop": 1696411635184,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Переход на экран 'О приложении'",
+            "start": 1696411638620,
+            "stop": 1696411638620,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        }
+    ],
+    "attachments": [
+    ],
+    "parameters": [
+    ],
+    "uuid": "40cae772-de53-4cea-8c48-4cffb0359e8a",
+    "historyId": "ee021c5fcffe588336c45684b7326691",
+    "fullName": "ru.iteco.fmhandroid.ui.tests.about.TermsOfUseTest.goToTermsOfUse",
+    "labels": [
+        {
+            "name": "package",
+            "value": "ru.iteco.fmhandroid.ui.tests.about"
+        },
+        {
+            "name": "testClass",
+            "value": "ru.iteco.fmhandroid.ui.tests.about.TermsOfUseTest"
+        },
+        {
+            "name": "testMethod",
+            "value": "goToTermsOfUse"
+        },
+        {
+            "name": "suite",
+            "value": "ru.iteco.fmhandroid.ui.tests.about.TermsOfUseTest"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "thread",
+            "value": "Instr: androidx.test.runner.AndroidJUnitRunner(476)"
+        },
+        {
+            "name": "framework",
+            "value": "junit4"
+        },
+        {
+            "name": "language",
+            "value": "kotlin"
+        }
+    ]
+}

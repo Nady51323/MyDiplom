@@ -1,0 +1,197 @@
+{
+    "name": "Блок Новости, раздел Панель управления новостями. Создание новости.",
+    "start": 1696412195331,
+    "stop": 1696412206837,
+    "stage": "finished",
+    "description": "Ввод невалидных значений. Поле Категория.",
+    "descriptionHtml": null,
+    "status": "passed",
+    "statusDetails": null,
+    "steps": [
+        {
+            "name": "Ожидание отображения кнопки 'Меню'",
+            "start": 1696412196375,
+            "stop": 1696412196376,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Переход на экран новостей",
+            "start": 1696412199852,
+            "stop": 1696412199853,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке 'Редактировать новость' c id:2131231026",
+            "start": 1696412201716,
+            "stop": 1696412201716,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке 'Создать новость' c id:2131230850",
+            "start": 1696412202365,
+            "stop": 1696412202365,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Выбрать текущую дату новости",
+            "start": 1696412203097,
+            "stop": 1696412203097,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке 'ОК' c id:16908313",
+            "start": 1696412203771,
+            "stop": 1696412203771,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Выбрать текущее время новости",
+            "start": 1696412204119,
+            "stop": 1696412204119,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке 'ОК' c id:16908313",
+            "start": 1696412204835,
+            "stop": 1696412204835,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке 'Сохранить' c id:2131231292",
+            "start": 1696412205297,
+            "stop": 1696412205297,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        }
+    ],
+    "attachments": [
+    ],
+    "parameters": [
+    ],
+    "uuid": "d7b3bb13-62a0-4830-8e9f-59ba4544226b",
+    "historyId": "ff4691c303d9fa65b184cbe0a46f6191",
+    "fullName": "ru.iteco.fmhandroid.ui.tests.news.NewsCreationInvalidDataSectionControlPanelTest.checkingCreatingNewsInvalidCategory",
+    "labels": [
+        {
+            "name": "package",
+            "value": "ru.iteco.fmhandroid.ui.tests.news"
+        },
+        {
+            "name": "testClass",
+            "value": "ru.iteco.fmhandroid.ui.tests.news.NewsCreationInvalidDataSectionControlPanelTest"
+        },
+        {
+            "name": "testMethod",
+            "value": "checkingCreatingNewsInvalidCategory"
+        },
+        {
+            "name": "suite",
+            "value": "ru.iteco.fmhandroid.ui.tests.news.NewsCreationInvalidDataSectionControlPanelTest"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "thread",
+            "value": "Instr: androidx.test.runner.AndroidJUnitRunner(576)"
+        },
+        {
+            "name": "framework",
+            "value": "junit4"
+        },
+        {
+            "name": "language",
+            "value": "kotlin"
+        }
+    ]
+}

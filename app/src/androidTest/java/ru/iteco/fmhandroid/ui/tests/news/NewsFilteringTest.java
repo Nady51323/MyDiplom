@@ -1,6 +1,9 @@
 package ru.iteco.fmhandroid.ui.tests.news;
 
 
+import static ru.iteco.fmhandroid.ui.data.TestData.DateEndNews;
+import static ru.iteco.fmhandroid.ui.data.TestData.DateStartNews;
+
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -14,7 +17,7 @@ import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
@@ -31,21 +34,20 @@ public class NewsFilteringTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    String DateStart = "01.05.2023";
-    String DateEnd = "01.06.2023";
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+    String DateStart = DateStartNews;
+    String DateEnd = DateEndNews;
 
     @Before
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагаем, что мы авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
 
@@ -69,26 +71,16 @@ public class NewsFilteringTest {
         NewsSelectCategorySteps.selectNewsCategoryNeedHelp();
 
         NewsSteps.filteringNewsSelectedPeriod(DateStart, DateEnd);
-
         NewsSteps.newsFilterButton();
         NewsCreationSteps.editNewsButton();
-
         NewsSteps.checkTextControlPanelIsVisible();
-
-
         NewsSteps.buttonFilterNews();
         NewsSteps.checkTextFilterNewsIsVisible();
-
-        //нажимаем категории , удостоверяемся в их наличии.
         NewsSelectCategorySteps.selectNewsCategoryAd();
 
-        //вводим даты
         NewsSteps.filteringNewsSelectedPeriod(DateStart, DateEnd);
-        Thread.sleep(1000);
-
         NewsSteps.selectFilterNewsCheckBoxActive();
         NewsSteps.selectFilterNewsCheckBoxActive();
-
         NewsSteps.selectFilterNewsCheckBoxInactive();
         NewsSteps.selectFilterNewsCheckBoxInactive();
 
@@ -96,7 +88,6 @@ public class NewsFilteringTest {
         NewsSteps.buttonFilterNews();
         ButtonSteps.buttonCancel();
 
-        AuthorizationSteps.logOut();
     }
 
 

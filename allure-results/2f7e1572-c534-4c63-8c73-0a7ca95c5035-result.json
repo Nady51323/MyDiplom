@@ -1,0 +1,117 @@
+{
+    "name": "Блок Авторизация. Вход в личный кабинет с невалидными данными.",
+    "start": 1696412717855,
+    "stop": 1696412723863,
+    "stage": "finished",
+    "description": "Пробелы в поле логин,корректный пароль.",
+    "descriptionHtml": null,
+    "status": "passed",
+    "statusDetails": null,
+    "steps": [
+        {
+            "name": "Ожидание отображения кнопки 'вход из приложение'",
+            "start": 1696412719028,
+            "stop": 1696412719028,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Авторизация (вход в личный кабинет)",
+            "start": 1696412722489,
+            "stop": 1696412722489,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Проверка отображения окна авторизации",
+            "start": 1696412723018,
+            "stop": 1696412723018,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Ожидание отображения кнопки 'вход из приложение'",
+            "start": 1696412723022,
+            "stop": 1696412723022,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        }
+    ],
+    "attachments": [
+    ],
+    "parameters": [
+    ],
+    "uuid": "2f7e1572-c534-4c63-8c73-0a7ca95c5035",
+    "historyId": "70bd0e9c996533c1bef318e55f8c46dc",
+    "fullName": "ru.iteco.fmhandroid.ui.tests.authorization.AuthorizationWithInvalidDataTest.spaceInLogin",
+    "labels": [
+        {
+            "name": "package",
+            "value": "ru.iteco.fmhandroid.ui.tests.authorization"
+        },
+        {
+            "name": "testClass",
+            "value": "ru.iteco.fmhandroid.ui.tests.authorization.AuthorizationWithInvalidDataTest"
+        },
+        {
+            "name": "testMethod",
+            "value": "spaceInLogin"
+        },
+        {
+            "name": "suite",
+            "value": "ru.iteco.fmhandroid.ui.tests.authorization.AuthorizationWithInvalidDataTest"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "thread",
+            "value": "Instr: androidx.test.runner.AndroidJUnitRunner(682)"
+        },
+        {
+            "name": "framework",
+            "value": "junit4"
+        },
+        {
+            "name": "language",
+            "value": "kotlin"
+        }
+    ]
+}

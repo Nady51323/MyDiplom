@@ -14,6 +14,7 @@ import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 
@@ -25,25 +26,24 @@ public class AuthorizationWithInvalidDataTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    String validLogin = "login2";
-    String validPassword = "password2";
-    String wrongLogin1 = "login28*-/";
-    String wrongLogin2 = "   login2";
-    String wrongLogin3 = "login2     ";
-    String wrongLogin4 = "Login2";
-    String wrongLogin5 = "   ";
-    String wrongPassword1 = "qwerty123";
-    String wrongPassword2 = "Password2";
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+    String WrongLogin1 = TestData.WrongLogin1;
+    String WrongLogin2 = TestData.WrongLogin2;
+    String WrongLogin3 = TestData.WrongLogin3;
+    String WrongLogin4 = TestData.WrongLogin4;
+    String WrongLogin5 =  TestData.WrongLogin5;
+    String WrongPassword1 = TestData.WrongPassword1;
+    String WrongPassword2 =  TestData.WrongPassword2;
 
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton();// предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdEnterButton();
         } catch (NoMatchingViewException e) {
+            AboutAppSteps.waitIdElementMenu();
             AuthorizationSteps.logOut();
         }
 
@@ -55,7 +55,7 @@ public class AuthorizationWithInvalidDataTest {
 
     public void enterWrongLoginCorrectPassword() throws InterruptedException {
 
-        AuthorizationSteps.logIn(wrongLogin1,validPassword);
+        AuthorizationSteps.logIn(WrongLogin1,Password);
         AuthorizationSteps.isAuthorizationScreen();
 
     }
@@ -67,13 +67,9 @@ public class AuthorizationWithInvalidDataTest {
 
     public void spaceAtStartOfLogin() throws InterruptedException {
 
-        AuthorizationSteps.logIn(wrongLogin2,validPassword);
+        AuthorizationSteps.logIn(WrongLogin2,Password);
+        AboutAppSteps.waitIdEnterButton();
         AuthorizationSteps.isAuthorizationScreen();
-
-        // ОР: вход в приложение не выполнен.
-
-        //ФР: Осуществлен вход в приложение. Баг.
-
 
     }
 
@@ -84,7 +80,7 @@ public class AuthorizationWithInvalidDataTest {
 
     public void swapCorrectLoginPassword() throws InterruptedException {
 
-        AuthorizationSteps.logIn(validPassword,validLogin);
+        AuthorizationSteps.logIn(Password,Login);
         AuthorizationSteps.isAuthorizationScreen();
 
     }
@@ -96,7 +92,7 @@ public class AuthorizationWithInvalidDataTest {
 
     public void enterCorrectLoginWrongPassword() throws InterruptedException {
 
-        AuthorizationSteps.logIn(validLogin,wrongPassword1);
+        AuthorizationSteps.logIn(Login,WrongPassword1);
         AuthorizationSteps.isAuthorizationScreen();
     }
 
@@ -107,13 +103,9 @@ public class AuthorizationWithInvalidDataTest {
 
     public void spaceAfterLogin() throws InterruptedException {
 
-        AuthorizationSteps.logIn(wrongLogin3,validPassword);
+        AuthorizationSteps.logIn(WrongLogin3,Password);
+        AboutAppSteps.waitIdEnterButton();
         AuthorizationSteps.isAuthorizationScreen();
-
-        // ОР: вход в приложение не выполнен.
-
-        //ФР: Осуществлен вход в приложение. Баг.
-        //AuthorizationSteps.logOut(); удалить!?
 
     }
 
@@ -124,7 +116,7 @@ public class AuthorizationWithInvalidDataTest {
 
     public void loginPasswordCapitalized() throws InterruptedException {
 
-        AuthorizationSteps.logIn(wrongLogin4,wrongPassword2);
+        AuthorizationSteps.logIn(WrongLogin4,WrongPassword2);
         AuthorizationSteps.isAuthorizationScreen();
 
     }
@@ -136,7 +128,7 @@ public class AuthorizationWithInvalidDataTest {
 
     public void spaceInLogin() throws InterruptedException {
 
-        AuthorizationSteps.logIn(wrongLogin5,validPassword);
+        AuthorizationSteps.logIn(WrongLogin5,Password);
         AuthorizationSteps.isAuthorizationScreen();
 
     }

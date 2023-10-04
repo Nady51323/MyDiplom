@@ -1,0 +1,181 @@
+{
+    "name": "Блок Претензии. Фильтрация претензий.",
+    "start": 1696405603689,
+    "stop": 1696405615827,
+    "stage": "finished",
+    "description": "Ни один статус не выбран.",
+    "descriptionHtml": null,
+    "status": "passed",
+    "statusDetails": null,
+    "steps": [
+        {
+            "name": "Ожидание отображения кнопки 'Меню'",
+            "start": 1696405606744,
+            "stop": 1696405606744,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Переход на экран 'Претензий'",
+            "start": 1696405609077,
+            "stop": 1696405609078,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Ожидание отображения кнопки фильтрации претензий",
+            "start": 1696405611445,
+            "stop": 1696405611445,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Начать фильтрацию претензий. Клик по кнопке c id:2131231063",
+            "start": 1696405611456,
+            "stop": 1696405611456,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик на чек-бокс 'Open'",
+            "start": 1696405612453,
+            "stop": 1696405612453,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик на чек-бокс 'In Progress'",
+            "start": 1696405612857,
+            "stop": 1696405612857,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Фильтрация претензий. Клик по кнопке 'Ok' c id:2131230916",
+            "start": 1696405613681,
+            "stop": 1696405613682,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Отображение кнопки 'Refresh'",
+            "start": 1696405614332,
+            "stop": 1696405614332,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        }
+    ],
+    "attachments": [
+    ],
+    "parameters": [
+    ],
+    "uuid": "e34766c5-3e2f-4045-962b-68fecb59ae8c",
+    "historyId": "4db32fa91ba0641a790b9e328d4da870",
+    "fullName": "ru.iteco.fmhandroid.ui.tests.claims.ClaimsFilteringTest.claimsFilteringWithoutStatusSelection",
+    "labels": [
+        {
+            "name": "package",
+            "value": "ru.iteco.fmhandroid.ui.tests.claims"
+        },
+        {
+            "name": "testClass",
+            "value": "ru.iteco.fmhandroid.ui.tests.claims.ClaimsFilteringTest"
+        },
+        {
+            "name": "testMethod",
+            "value": "claimsFilteringWithoutStatusSelection"
+        },
+        {
+            "name": "suite",
+            "value": "ru.iteco.fmhandroid.ui.tests.claims.ClaimsFilteringTest"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "thread",
+            "value": "Instr: androidx.test.runner.AndroidJUnitRunner(4141)"
+        },
+        {
+            "name": "framework",
+            "value": "junit4"
+        },
+        {
+            "name": "language",
+            "value": "kotlin"
+        }
+    ]
+}

@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 
@@ -22,22 +22,25 @@ import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 @RunWith(AllureAndroidJUnit4.class)
 public class SuccessfulAuthorizationTests {
 
+
     @Rule
     public ActivityTestRule<AppActivity> mActivityTestRule =
             new ActivityTestRule<>(AppActivity.class);
 
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
 
 
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton();// предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
-        } catch (NoMatchingViewException e) {
+            AboutAppSteps.waitIdElementMenu();
             AuthorizationSteps.logOut();
+        } catch (NoMatchingViewException e) {
+            AuthorizationSteps.isAuthorizationScreen();
+
         }
 
     }
@@ -47,9 +50,9 @@ public class SuccessfulAuthorizationTests {
 
     public void successfulAuthorizationTest() throws InterruptedException {
 
-        DataHelper.logIn();
+        AuthorizationSteps.logIn(Login, Password);
         AboutAppSteps.waitIdElementMenu();
-        AuthorizationSteps.logOut();
+        AuthorizationSteps.verificationOfSuccessfulAuthorization();
 
     }
 
@@ -58,7 +61,8 @@ public class SuccessfulAuthorizationTests {
 
     public void logOutTest() throws InterruptedException {
 
-        DataHelper.logIn();
+        AuthorizationSteps.logIn(Login, Password);
+        AboutAppSteps.waitIdElementMenu();
         AuthorizationSteps.logOut();
         AuthorizationSteps.isAuthorizationScreen();
 

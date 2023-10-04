@@ -9,6 +9,4 @@ public class AboutAppScreen {
     public static ViewInteraction privacyPolicyValue = onView(withText("https://vhospice.org/#/privacy-policy/"));
     public static ViewInteraction termsOfUseValue = onView(withText("https://vhospice.org/#/terms-of-use"));
 
-    //public static ViewInteraction goBackButton = onView(withId(R.id.about_back_image_button));
-
 }

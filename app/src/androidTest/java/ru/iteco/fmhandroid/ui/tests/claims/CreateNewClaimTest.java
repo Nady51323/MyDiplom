@@ -1,6 +1,9 @@
 package ru.iteco.fmhandroid.ui.tests.claims;
 
 
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -13,40 +16,40 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
+import ru.iteco.fmhandroid.ui.screenElements.ClaimCreationScreen;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsCreationSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsSteps;
-import ru.iteco.fmhandroid.ui.steps.QuotesSteps;
 
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
 public class CreateNewClaimTest {
 
+
     @Rule
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    String Title = "Title NewClaim:13 !@#$%^&*(-+){}<>123456789101234";
-    String Date = "10.10.1100";
-    String Description = "Description NewClaim:13 !@#$%^&*(-+){}<>123456789";
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+    String Title = TestData.TITLE;
+    String Date = TestData.DATE;
+    String Description = TestData.DESCRIPTION;
 
 
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
     @Test
@@ -57,18 +60,9 @@ public class CreateNewClaimTest {
         ClaimsSteps.goToClaimsScreen();
         ClaimsSteps.createNewClaim();
         ClaimsCreationSteps.inputNewClaimValidData(Title, Date, Description);
-        QuotesSteps.loveIsAllButton();
-        ClaimsSteps.goToClaimsScreen();
-        //ClaimCreationScreen.checkTitleOfClaim.check(matches(isDisplayed())); не видит текст
-
-        ClaimsSteps.openFirstClaim();
-        ClaimsSteps.statusProcessingButton();
-        ClaimsSteps.changeClaimStatusToExecute();
-        DataHelper.addComment();
-        ButtonSteps.buttonОк();
-        ClaimsSteps.closeClaimButton();
-        AuthorizationSteps.logOut();
+        ClaimCreationScreen.checkTitleOfClaim.check(matches(isDisplayed()));
     }
+
 
 
     @Test
@@ -79,14 +73,11 @@ public class CreateNewClaimTest {
         ClaimsSteps.goToClaimsScreen();
         ClaimsSteps.createNewClaim();
         ButtonSteps.saveButton();
-        ClaimsSteps.waitIdElementButtonOk();
         ClaimsSteps.validationMessage();
         ButtonSteps.buttonОк();
         ButtonSteps.buttonCancel();
-        ClaimsSteps.waitIdElementButtonOk();
         ClaimsSteps.errorMessage();
         ButtonSteps.buttonОк();
-        AuthorizationSteps.logOut();
 
     }
 }

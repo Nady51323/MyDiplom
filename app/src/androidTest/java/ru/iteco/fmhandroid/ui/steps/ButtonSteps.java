@@ -1,14 +1,9 @@
 package ru.iteco.fmhandroid.ui.steps;
 
-import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
-
-import androidx.test.espresso.ViewInteraction;
 
 import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
@@ -28,7 +23,7 @@ public class ButtonSteps {
     public static void buttonCancel() throws InterruptedException {
 
         Allure.step("Клик по кнопке 'Отмена' c id:" + (R.id.cancel_button));
-        //ClaimCreationScreen.okButton.check(matches(isDisplayed()));
+        ClaimsScreen.cancelButton.check(matches(isDisplayed()));
         ClaimsScreen.cancelButton.perform(click());
 
     }
@@ -50,17 +45,5 @@ public class ButtonSteps {
     }
 
 
-    //Блок Новости
-
-    public static void buttonCancelNews() { // она где-нибудь используется?
-
-        //кнопка "отмена" в блоке "Новости"
-
-        ViewInteraction clickCancelButton = onView(
-                allOf(withId(android.R.id.button2)));
-        clickCancelButton.check(matches(isDisplayed()));
-        clickCancelButton.perform(scrollTo(), click());
-
-    }
 
 }

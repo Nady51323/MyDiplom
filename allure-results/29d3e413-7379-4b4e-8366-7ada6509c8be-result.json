@@ -1,0 +1,117 @@
+{
+    "name": "Блок Тематические цитаты.",
+    "start": 1696354901482,
+    "stop": 1696354910272,
+    "stage": "finished",
+    "description": "Наличие и возможности просмотра цитат в блоке цитат о хосписе.",
+    "descriptionHtml": null,
+    "status": "passed",
+    "statusDetails": null,
+    "steps": [
+        {
+            "name": "Ожидание отображения кнопки 'Меню'",
+            "start": 1696354903875,
+            "stop": 1696354903875,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Клик по кнопке перехода в блоке 'Тематические цитаты' c id:2131231248",
+            "start": 1696354906977,
+            "stop": 1696354906977,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Выбор первой цитаты в блоке 'Тематические цитаты'",
+            "start": 1696354907836,
+            "stop": 1696354907836,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        },
+        {
+            "name": "Выбор первой цитаты в блоке 'Тематические цитаты'",
+            "start": 1696354908352,
+            "stop": 1696354908352,
+            "stage": "finished",
+            "description": null,
+            "descriptionHtml": null,
+            "status": "passed",
+            "statusDetails": null,
+            "steps": [
+            ],
+            "attachments": [
+            ],
+            "parameters": [
+            ]
+        }
+    ],
+    "attachments": [
+    ],
+    "parameters": [
+    ],
+    "uuid": "29d3e413-7379-4b4e-8366-7ada6509c8be",
+    "historyId": "7557416e146621bbe938142bc1a8875",
+    "fullName": "ru.iteco.fmhandroid.ui.tests.ThematicQuotes.ThematicQuotesTest.checkingForQuotesInBlockTest",
+    "labels": [
+        {
+            "name": "package",
+            "value": "ru.iteco.fmhandroid.ui.tests.ThematicQuotes"
+        },
+        {
+            "name": "testClass",
+            "value": "ru.iteco.fmhandroid.ui.tests.ThematicQuotes.ThematicQuotesTest"
+        },
+        {
+            "name": "testMethod",
+            "value": "checkingForQuotesInBlockTest"
+        },
+        {
+            "name": "suite",
+            "value": "ru.iteco.fmhandroid.ui.tests.ThematicQuotes.ThematicQuotesTest"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "thread",
+            "value": "Instr: androidx.test.runner.AndroidJUnitRunner(3796)"
+        },
+        {
+            "name": "framework",
+            "value": "junit4"
+        },
+        {
+            "name": "language",
+            "value": "kotlin"
+        }
+    ]
+}

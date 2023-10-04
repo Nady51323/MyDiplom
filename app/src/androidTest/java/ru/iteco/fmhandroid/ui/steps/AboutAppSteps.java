@@ -68,6 +68,7 @@ public class AboutAppSteps {
     public static void waitIdEnterButton() {
         Allure.step("Ожидание отображения кнопки 'вход из приложение'");
         onView(isRoot()).perform(waitDisplayed(R.id.enter_button, 10000));
+
     }
 
     public static void waitIdElementMenu() {

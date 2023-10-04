@@ -16,7 +16,6 @@ public class MainScreen {
 
     // Меню
     public static ViewInteraction mainMenuButton = onView(withId(R.id.main_menu_image_button));
-    //public static ViewInteraction mainOfMenu = onView(withText("Main"));
     public static ViewInteraction claimsOfMenu = onView(withText("Claims"));
     public static ViewInteraction newsOfMenu = onView(withText("News"));
     public static ViewInteraction aboutOfMenu = onView(withText("About"));

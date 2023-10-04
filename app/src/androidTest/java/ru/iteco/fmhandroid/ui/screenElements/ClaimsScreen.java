@@ -14,7 +14,7 @@ import ru.iteco.fmhandroid.R;
 
 public class ClaimsScreen {
 
-    // Смена статуса претензии (со статусом open)
+    // Смена статуса претензии
     public static ViewInteraction changeStatusButtonOfClaim = onView(withId(R.id.status_processing_image_button));
 
     // Редактирование претензии
@@ -28,7 +28,6 @@ public class ClaimsScreen {
     public static ViewInteraction claimStatusToExecute = onView(withText("To execute"));
     public static ViewInteraction claimStatusExecuted = onView(withText("Executed"));
     public static ViewInteraction claimValidationMessage = onView(withId(android.R.id.message));
-    //public static ViewInteraction claimValidationMessage = onView(withText("Fill empty fields"));
     public static ViewInteraction errorMessage = onView(withText("The changes won't be saved, do you really want to log out?"));
     public static ViewInteraction containerForClaims = onView(withId(R.id.claim_list_recycler_view));
     public static ViewInteraction takeToWorkButton = onView(withText("take to work"));
@@ -36,7 +35,6 @@ public class ClaimsScreen {
     public static ViewInteraction closeClaimButton = onView(withId(R.id.close_image_button));
     public static ViewInteraction cancelButton = onView(withId(R.id.cancel_button));
     public static ViewInteraction saveButton = onView(withId(R.id.save_button));
-    // public static ViewInteraction editTitleOfClaim = onView(withId(R.id.title_edit_text));
 
     // Фильтрация претензий
     public static ViewInteraction buttonForClaimsFiltering = onView(withId(R.id.filters_material_button));

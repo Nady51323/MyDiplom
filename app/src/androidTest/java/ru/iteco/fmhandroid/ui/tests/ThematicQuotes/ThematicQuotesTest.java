@@ -17,7 +17,7 @@ import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.screenElements.QuotesScreen;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
@@ -31,19 +31,19 @@ public class ThematicQuotesTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+
 
     @Before
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
     @Test
@@ -57,6 +57,6 @@ public class ThematicQuotesTest {
         QuotesSteps.listRecyclerOurMission();
         QuotesSteps.listRecyclerOurMission();
         QuotesScreen.missionTitle.check(matches(isDisplayed()));
-        AuthorizationSteps.logOut();
+
     }
 }

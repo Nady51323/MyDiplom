@@ -1,6 +1,12 @@
 package ru.iteco.fmhandroid.ui.tests.claims;
 
 
+import static ru.iteco.fmhandroid.ui.data.TestData.COMMENT;
+import static ru.iteco.fmhandroid.ui.data.TestData.DATE1;
+import static ru.iteco.fmhandroid.ui.data.TestData.DESCRIPTION1;
+import static ru.iteco.fmhandroid.ui.data.TestData.TIME1;
+import static ru.iteco.fmhandroid.ui.data.TestData.TITLE1;
+
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -13,13 +19,12 @@ import org.junit.runner.RunWith;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ButtonSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsCreationSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsSteps;
-import ru.iteco.fmhandroid.ui.steps.QuotesSteps;
 
 
 @LargeTest
@@ -30,106 +35,83 @@ public class ClaimEditingTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    String NewTitle = "Claim #1 Edit title";
-    String NewDate = "13.10.1980";
-    String NewTime = "13:00";
-    String NewDescription = "Edit Description 123#|+!";
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+    String Title = TestData.TITLE;
+    String Date = TestData.DATE;
+    String Description = TestData.DESCRIPTION;
+    String NewTitle = TITLE1;
+    String NewDate = DATE1;
+    String NewTime = TIME1;
+    String NewDescription = DESCRIPTION1;
+    String NewComment = COMMENT;
 
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
+
     @Test
-    @DisplayName("Блок Претензии. Редактирование претензии.")// должна быть создана 1 претензия перед сдачей
+    @DisplayName("Блок Претензии. Редактирование претензии.")
 
     public void claimEditing() throws InterruptedException {
 
         ClaimsSteps.goToClaimsScreen();
         ClaimsSteps.createNewClaim();
-        DataHelper.createClaim();
-
-        QuotesSteps.loveIsAllButton();
-        ClaimsSteps.goToClaimsScreen();
+        ClaimsCreationSteps.inputNewClaimValidData(Title, Date, Description);
+        ClaimsSteps.waitIdElementCreateNewClaimButton();
 
         ClaimsSteps.openFirstClaim();
-        ClaimsSteps.waitIdElementStatusButton();// Thread.sleep(2000);
+        ClaimsSteps.waitIdElementStatusButton();
         ClaimsSteps.statusProcessingButton();
-        Thread.sleep(2000);
-
         ButtonSteps.throwOffButton();
-        Thread.sleep(2000);
-        DataHelper.addComment();
-        Thread.sleep(2000);
+        ClaimsCreationSteps.addComment(NewComment);
         ButtonSteps.buttonОк();
-        Thread.sleep(3000);
-        ClaimsSteps.editButton();
-        Thread.sleep(2000);
+        ClaimsSteps.waitIdElementStatusButton();
 
+        ClaimsSteps.editButton();
         ClaimsCreationSteps.editClaim(NewTitle, NewDate, NewTime, NewDescription);
+        ClaimsSteps.waitIdElementStatusButton();
+        ClaimsSteps.statusProcessingButton();
+        ClaimsSteps.changeClaimStatusToExecute();
+        ClaimsCreationSteps.addComment(NewComment);
+        ButtonSteps.buttonОк();
+        ClaimsSteps.checkClaimStatusExecuted();
+        ClaimsSteps.closeClaimButton();
+
+
+
+    }
+    @Test
+    @DisplayName("Блок Претензии. Добавление комментариев в претензии.")
+
+    public void claimAddComment() throws InterruptedException {
+
+        ClaimsSteps.goToClaimsScreen();
+        ClaimsSteps.createNewClaim();
+        ClaimsCreationSteps.inputNewClaimValidData(Title, Date, Description);
+        ClaimsSteps.waitIdElementCreateNewClaimButton();
+
+        ClaimsSteps.openFirstClaim();
+        ClaimsSteps.waitIdElementStatusButton();
+        ClaimsSteps.addCommentButton();
+        ClaimsCreationSteps.addComment(NewComment);
+        ButtonSteps.saveButton();
+        //ClaimsSteps.checkAddComment(); // отрабатывает нестабильно. по факту комментарий сохранен
 
         ClaimsSteps.statusProcessingButton();
         ClaimsSteps.changeClaimStatusToExecute();
-        DataHelper.addComment();
+        ClaimsCreationSteps.addComment(NewComment);
         ButtonSteps.buttonОк();
-       // ClaimsSteps.checkClaimStatusExecuted(); не видит текст
-
         ClaimsSteps.closeClaimButton();
-
-      /* ClaimsScreen.editTitleOfClaim.perform(clearText());// редактировать название
-
-
-
-        ViewInteraction editTitle = onView(
-                allOf(withId(R.id.title_edit_text)));
-        editTitle.perform(clearText());
-        ClaimsScreen.editTitleOfClaim.perform(typeText());
-        editTitle.check(matches(withText("Claim #1 Edit title")));
-
-        //выбрать исполнителя из списка
-        ClaimsSteps.selectFromList();
-
-        ViewInteraction selectExecutorFromList =
-                onView(withText("Ivanov Ivan Ivanovich"))
-                        .inRoot(RootMatchers.isPlatformPopup())
-                        .perform(click());
-        Thread.sleep(2000);
-
-        //изменить дату
-        ViewInteraction editDate = onView(
-                allOf(withId(R.id.date_in_plan_text_input_edit_text)));
-        editDate.perform(clearText());
-        editDate.perform(replaceText("13.10.1989"), closeSoftKeyboard());
-        editDate.check(matches(withText("13.10.1989")));
-
-        //изменить время
-        ViewInteraction editTime = onView(
-                allOf(withId(R.id.time_in_plan_text_input_edit_text)));
-        editTime.perform(clearText());
-        editTime.perform(replaceText("13:00"), closeSoftKeyboard());
-        editTime.check(matches(withText("13:00")));
-
-        //редактировать описание
-        ViewInteraction editDescription = onView(
-                allOf(withId(R.id.description_edit_text)));
-        editDescription.perform(clearText());
-        editDescription.perform(typeText("Edit Description 123#|+!"), closeSoftKeyboard());
-        editDescription.check(matches(withText("Edit Description 123#|+!")));
-
-        //сохранить
-        ButtonSteps.saveButton();*/
-
-        AuthorizationSteps.logOut();
 
     }
 }

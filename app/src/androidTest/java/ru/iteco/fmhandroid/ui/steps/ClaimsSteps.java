@@ -35,7 +35,6 @@ public class ClaimsSteps {
 
         Allure.step("Проверка, что претензия в статусе 'Open'");
         ClaimsScreen.claimStatusOpen.check(matches(isDisplayed()));
-        Thread.sleep(2000);
 
     }
 
@@ -53,7 +52,7 @@ public class ClaimsSteps {
 
         Allure.step("Проверка, что претензия в статусе 'Executed'");
         ClaimsScreen.claimStatusExecuted.check(matches(isDisplayed()));
-        //Thread.sleep(2000);
+
 
     }
 
@@ -61,7 +60,7 @@ public class ClaimsSteps {
 
         Allure.step("Проверка добавления комментария");
         ClaimCreationScreen.checkAddComment.check(matches(isDisplayed()));
-      //  Thread.sleep(1000);
+
     }
 
 
@@ -92,21 +91,21 @@ public class ClaimsSteps {
 
         Allure.step("Переход ко второй претензии в блоке");
         ClaimsScreen.containerForClaims.perform(actionOnItemAtPosition(1, click()));
-       // Thread.sleep(2000); не проверено
+
     }
 
     public static void openThirdClaim() throws InterruptedException {
 
         Allure.step("Переход к третьей претензии в блоке");
         ClaimsScreen.containerForClaims.perform(actionOnItemAtPosition(2, click()));
-        //Thread.sleep(2000); не проверено
+
     }
 
     public static void openFourthClaim() throws InterruptedException {
 
         Allure.step("Переход к четвертой претензии в блоке");
         ClaimsScreen.containerForClaims.perform(actionOnItemAtPosition(3, click()));
-        //Thread.sleep(2000); не проверено
+
     }
 
 
@@ -145,7 +144,6 @@ public class ClaimsSteps {
     public static void takeToWorkButton() throws InterruptedException {
 
         Allure.step("Клик по кнопке 'Take to work'");
-       // ClaimsScreen.takeToWorkButton.perform(scrollTo());
         ClaimsScreen.takeToWorkButton.check(matches(isDisplayed()));
         ClaimsScreen.takeToWorkButton.perform(scrollTo(), click());
 
@@ -162,7 +160,7 @@ public class ClaimsSteps {
 
     public static void buttonRefresh() {
 
-        Allure.step("Отображение кнопки 'Refresh'");// в каком блоке??? написать в описании
+        Allure.step("Отображение кнопки 'Refresh'");//
         ClaimsScreen.buttonRefresh.check(matches(isDisplayed()));
 
     }
@@ -179,7 +177,7 @@ public class ClaimsSteps {
         Allure.step("Добавление новой претензии. Клик по кнопке c id:" + R.id.add_new_claim_material_button);
         ClaimsScreen.addNewClaimButton.perform(click());
         ClaimsSteps.waitIdElementSaveButton();
-        //Thread.sleep(2000);
+
 
     }
 
@@ -187,8 +185,8 @@ public class ClaimsSteps {
     public static void statusProcessingButton() throws InterruptedException {
 
         Allure.step("Изменить статус претензии. Клик по кнопке c id:" + (R.id.status_processing_image_button));
-       // ClaimsScreen.changeStatusButtonOfClaim.perform(scrollTo());
-        ClaimsScreen.changeStatusButtonOfClaim.check(matches(isDisplayed()));// если тесты проходят - убрать и сделать в 1 строку
+        ClaimsScreen.changeStatusButtonOfClaim.perform(scrollTo());
+        ClaimsScreen.changeStatusButtonOfClaim.check(matches(isDisplayed()));
         ClaimsScreen.changeStatusButtonOfClaim.perform(scrollTo(), click());
 
     }
@@ -196,28 +194,25 @@ public class ClaimsSteps {
     public static void editButton() throws InterruptedException {
 
         Allure.step("'Редактировать'претензию. Клик по кнопке  c id:" + (R.id.edit_processing_image_button));
-      //ClaimsScreen.editClaimButton.perform(scrollTo());
-        ClaimsScreen.editClaimButton.check(matches(isDisplayed()));// если тесты проходят - убрать и сделать в 1 строку
+        ClaimsScreen.editClaimButton.check(matches(isDisplayed()));
         ClaimsScreen.editClaimButton.perform(scrollTo(), click());
-
-        Thread.sleep(2000);
     }
 
 
     public static void selectFromList() throws InterruptedException {
 
         Allure.step("'Выбрать из списка' в блоке 'Претензии'. Клик по кнопке c id:" + (R.id.executor_drop_menu_auto_complete_text_view));
-       // ClaimsScreen.selectFromList.check(matches(isDisplayed()));тесты проходят - убрать
+        ClaimsScreen.selectFromList.check(matches(isDisplayed()));
         ClaimsScreen.selectFromList.perform(click(), closeSoftKeyboard());
         ClaimsSteps.waitIdElementExecutor();
-        //Thread.sleep(2000);
+
     }
 
     public static void addCommentButton() throws InterruptedException {
 
         Allure.step("'Добавить комментарий' в блоке 'Претензии'. Клик по кнопке c id:" + (R.id.add_comment_image_button));
-       // ClaimsScreen.addCommentButton.perform(scrollTo());
-        ClaimsScreen.addCommentButton.check(matches(isDisplayed())); // если тесты проходят - убрать и сделать в 1 строку
+        ClaimsScreen.addCommentButton.perform(scrollTo());
+        ClaimsScreen.addCommentButton.check(matches(isDisplayed()));
         ClaimsScreen.addCommentButton.perform(scrollTo(), click());
         ClaimsSteps.waitIdElementSaveButton();
 
@@ -228,7 +223,7 @@ public class ClaimsSteps {
         Allure.step("'Закрыть претензию'. Клик по кнопке c id:" + (R.id.close_image_button));
         ClaimsScreen.closeClaimButton.check(matches(isDisplayed()));
         ClaimsScreen.closeClaimButton.perform(scrollTo(), click());
-        ClaimsSteps.waitIdElementFiltersButton();
+
 
     }
 
@@ -246,37 +241,25 @@ public class ClaimsSteps {
         Allure.step("Ожидание отображения кнопки фильтрации претензий");
         onView(isRoot()).perform(waitDisplayed(R.id.filters_material_button, 10000));
     }
-    public static void waitElement11111() {
-        Allure.step("Ожидание отображения кнопки фильтрации претензий");
-        onView(isRoot()).perform(waitDisplayed(R.id.filters_material_button, 10000));
+    public static void waitElementCloseButton() {
+        Allure.step("Ожидание отображения кнопки закрыть претензию");
+        onView(isRoot()).perform(waitDisplayed(R.id.close_image_button, 10000));
     }
 
-    public static void waitIdElementClaimList() {
-        Allure.step("Ожидание отображения кнопки фильтрации претензий");
-        onView(isRoot()).perform(waitDisplayed(R.id.add_new_claim_material_button, 10000));
-    }
-
-    public static void waitIdElementAddCommentButton() {
+   public static void waitIdElementAddCommentButton() {
         Allure.step("Ожидание отображения кнопки добавить комментарий");
         onView(isRoot()).perform(waitDisplayed(R.id.add_comment_image_button, 10000));
     }
 
-    public static void waitIdElementButtonOk() {
-        Allure.step("Ожидание отображения кнопки ок");
-        onView(isRoot()).perform(waitDisplayed(android.R.id.button1, 3000));
+    public static void waitIdElementCreateNewClaimButton() {
+        Allure.step("Ожидание отображения кнопки создать новую претензию");
+        onView(isRoot()).perform(waitDisplayed(R.id.add_new_claim_material_button, 7000));
     }
 
 
     public static void waitIdElementStatusButton() {
         Allure.step("Ожидание отображения кнопки добавить комментарий");
         onView(isRoot()).perform(waitDisplayed(R.id.status_processing_image_button, 7000));
-    }
-
-    //R.id.editText
-
-    public static void waitIdElementThrowOffButton() {
-        Allure.step("Ожидание отображения кнопки добавить комментарий");
-        onView(isRoot()).perform(waitDisplayed(R.id.editText, 7000));
     }
 
 }

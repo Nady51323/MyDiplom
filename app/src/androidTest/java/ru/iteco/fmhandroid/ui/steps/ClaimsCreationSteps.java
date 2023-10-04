@@ -6,10 +6,11 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
 import static ru.iteco.fmhandroid.utils.CustomViewActions.waitDisplayed;
 
 import androidx.test.espresso.matcher.RootMatchers;
@@ -42,13 +43,13 @@ public class ClaimsCreationSteps {
     public static void editClaim(String NewTitle, String NewDate, String NewTime, String NewDescription) throws InterruptedException {
 
         Allure.step("Редактирование претензии.");
-        ClaimCreationScreen.titleTextInputOfClaim.perform(clearText());//очищаем название
+        ClaimCreationScreen.titleTextInputOfClaim.perform(clearText());
         ClaimCreationScreen.titleTextInputOfClaim.perform(replaceText(NewTitle));
         ClaimCreationScreen.titleTextInputOfClaim.check(matches(withText(NewTitle)));
 
         ClaimsScreen.selectFromList.perform(click(), closeSoftKeyboard());
         ClaimCreationScreen.selectExecutorFromList.inRoot(RootMatchers.isPlatformPopup()).perform(click());
-        ClaimsSteps.waitIdElementExecutor(); //Thread.sleep(2000);
+        ClaimsSteps.waitIdElementExecutor();
 
         ClaimCreationScreen.dateOfClaim.perform(clearText());
         ClaimCreationScreen.dateOfClaim.perform(replaceText(NewDate));
@@ -61,14 +62,21 @@ public class ClaimsCreationSteps {
         ClaimCreationScreen.descriptionTextInputOfClaim.perform(clearText());
         ClaimCreationScreen.descriptionTextInputOfClaim.perform(replaceText(NewDescription));
         ClaimCreationScreen.descriptionTextInputOfClaim.check(matches(withText(NewDescription)));
-
         ClaimCreationScreen.saveButton.perform(scrollTo(), click());
-        Thread.sleep(3000);
+
 
     }
+
+    public static void addComment(String NewComment) {
+
+        Allure.step("Добавление текста комментария.");
+        ClaimsScreen.addComment.check(matches(isDisplayed()));
+        ClaimsScreen.addComment.perform(typeText(NewComment));
+    }
+
     public static void waitIdElementListClaims() {
         Allure.step("Ожидание отображения списка претензий");
-        onView(isRoot()).perform(waitDisplayed(R.id.all_claims_cards_block_constraint_layout, 7000));
+        onView(isRoot()).perform(waitDisplayed(R.id.claim_list_card, 7000));
     }
 
 

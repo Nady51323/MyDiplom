@@ -14,7 +14,7 @@ import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
 import ru.iteco.fmhandroid.ui.steps.ClaimsSteps;
@@ -27,19 +27,19 @@ public class ClaimsFilteringTest {
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагается, что мы не авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
 
@@ -65,7 +65,7 @@ public class ClaimsFilteringTest {
         ClaimsSteps.checkBoxExecutedFiltersClaims();
         ClaimsSteps.checkBoxCancelledFiltersClaims();
         ClaimsSteps.buttonOkFilter();
-        AuthorizationSteps.logOut();
+
     }
 
     @Test
@@ -80,7 +80,6 @@ public class ClaimsFilteringTest {
         ClaimsSteps.checkBoxInProgressFiltersClaims();
         ClaimsSteps.buttonOkFilter();
         ClaimsSteps.buttonRefresh();
-        AuthorizationSteps.logOut();
 
     }
 
@@ -88,6 +87,7 @@ public class ClaimsFilteringTest {
     @Test
     @DisplayName("Блок Претензии. Фильтрация претензий.")
     @Description("Выбран статус Открыта.")
+
 
     public void claimsFilteringStatusOpen() throws InterruptedException {
 
@@ -101,33 +101,30 @@ public class ClaimsFilteringTest {
         // карточка 1
 
         ClaimsSteps.openFirstClaim();
-        Thread.sleep(2000);
+        ClaimsSteps.waitElementCloseButton();
         ClaimsSteps.checkClaimStatusOpen();
         ClaimsSteps.closeClaimButton();
 
-        //карточка 2 // на второй карточке падает тест с ошибкой не находит текст
+        //карточка 2
 
         ClaimsSteps.openSecondClaim();
-        Thread.sleep(2000);
+        ClaimsSteps.waitElementCloseButton();
         ClaimsSteps.checkClaimStatusOpen();
         ClaimsSteps.closeClaimButton();
 
         // карточка 3
 
         ClaimsSteps.openThirdClaim();
-        Thread.sleep(2000);
+        ClaimsSteps.waitElementCloseButton();
         ClaimsSteps.checkClaimStatusOpen();
         ClaimsSteps.closeClaimButton();
 
         //карточка 4
 
         ClaimsSteps.openFourthClaim();
-        Thread.sleep(2000);
-
+        ClaimsSteps.waitElementCloseButton();
         ClaimsSteps.checkClaimStatusOpen();
         ClaimsSteps.closeClaimButton();
-
-        AuthorizationSteps.logOut();
 
     }
 

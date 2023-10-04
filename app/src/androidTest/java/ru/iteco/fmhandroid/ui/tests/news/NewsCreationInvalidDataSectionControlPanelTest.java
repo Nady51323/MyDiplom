@@ -7,6 +7,11 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static ru.iteco.fmhandroid.ui.data.TestData.DescriptionNews;
+import static ru.iteco.fmhandroid.ui.data.TestData.InvalidDataCategoryNews;
+import static ru.iteco.fmhandroid.ui.data.TestData.InvalidDataTitleNews;
+import static ru.iteco.fmhandroid.ui.data.TestData.InvalidPublishDateNews;
+import static ru.iteco.fmhandroid.ui.data.TestData.TitleNews;
 
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.filters.LargeTest;
@@ -21,7 +26,7 @@ import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Description;
 import io.qameta.allure.kotlin.junit4.DisplayName;
 import ru.iteco.fmhandroid.ui.AppActivity;
-import ru.iteco.fmhandroid.ui.data.DataHelper;
+import ru.iteco.fmhandroid.ui.data.TestData;
 import ru.iteco.fmhandroid.ui.screenElements.NewsScreen;
 import ru.iteco.fmhandroid.ui.steps.AboutAppSteps;
 import ru.iteco.fmhandroid.ui.steps.AuthorizationSteps;
@@ -34,29 +39,29 @@ import ru.iteco.fmhandroid.ui.steps.NewsSteps;
 @RunWith(AllureAndroidJUnit4.class)
 public class NewsCreationInvalidDataSectionControlPanelTest {
 
+
     @Rule
     public ActivityTestRule<AppActivity> mActivityScenarioRule =
             new ActivityTestRule<>(AppActivity.class);
 
-    String invalidDataCategory = "Category_Категория//12345678910123456789101234567891012345678910";
-    String Title = "Enter Title:13  !@#$%^&*(-+){}<>12345678910123456789";
-    String Description = "Description:13 !@#$%^&*(-+){}<>12345678910123456789";
-    String invalidDataTitle = "Title//12345678910123456789101234567891012345678910123456";
-    String invalidPublishDate = "13.10.1991";
+    String Login = TestData.ValidLogin;
+    String Password = TestData.ValidPassword;
+    String InvalidDataCategory = InvalidDataCategoryNews;
+    String Title = TitleNews;
+    String Description = DescriptionNews;
+    String InvalidDataTitle = InvalidDataTitleNews;
+    String InvalidPublishDate = InvalidPublishDateNews;
 
     @Before
 
     public void waitElement() throws InterruptedException {
 
-        AboutAppSteps.waitIdEnterButton(); // предполагаем, что мы авторизованы
-
         try {
-            AuthorizationSteps.isAuthorizationScreen();
+            AboutAppSteps.waitIdElementMenu();
         } catch (NoMatchingViewException e) {
-            AuthorizationSteps.logOut();
+            AuthorizationSteps.isAuthorizationScreen();
+            AuthorizationSteps.logIn(Login, Password);
         }
-
-        DataHelper.logIn();
     }
 
 
@@ -66,25 +71,19 @@ public class NewsCreationInvalidDataSectionControlPanelTest {
 
     public void checkingCreatingNewsInvalidCategory() throws InterruptedException {
 
-        NewsSteps.goToNewsScreen();//перейти в раздел новостей
-        NewsCreationSteps.editNewsButton(); //добавить новость +
+        NewsSteps.goToNewsScreen();
+        NewsCreationSteps.editNewsButton();
         NewsCreationSteps.addNewsButton();
-
-        //NewsCreationSteps.inputNewsInvalidDataCategory();
-        NewsScreen.categoryTextInputOfNews.perform(replaceText(invalidDataCategory), closeSoftKeyboard());
+        NewsScreen.categoryTextInputOfNews.perform(replaceText(InvalidDataCategory), closeSoftKeyboard());
         NewsScreen.checkCategoryOfNews.check(matches(isDisplayed()));
-        NewsScreen.titleTextInputOfNews.perform(replaceText(Title)); //заполнить заголовок
+        NewsScreen.titleTextInputOfNews.perform(replaceText(Title));
         NewsScreen.titleTextInputOfNews.check(matches(withText(Title)));
-        NewsSteps.selectCurrentNewsDate();  //выбрать текущую дату
-        NewsSteps.selectCurrentNewsTime();  //выбрать текущее время
-        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));   //заполнить описание
+        NewsSteps.selectCurrentNewsDate();
+        NewsSteps.selectCurrentNewsTime();
+        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));
         NewsScreen.descriptionTextInputOfNews.check(matches(withText(Description)));
         ButtonSteps.saveButton();
-
-        //не сохранено
         pressBack();
-        Thread.sleep(2000);
-        AuthorizationSteps.logOut();
 
     }
 
@@ -95,23 +94,19 @@ public class NewsCreationInvalidDataSectionControlPanelTest {
 
     public void checkingControlPanelCreatingNewsInvalidTitle() throws InterruptedException {
 
-        NewsSteps.goToNewsScreen();//перейти в раздел новостей
-        NewsCreationSteps.editNewsButton(); //добавить новость +
+        NewsSteps.goToNewsScreen();
+        NewsCreationSteps.editNewsButton();
         NewsCreationSteps.addNewsButton();
-
-       // NewsCreationSteps.inputNewsInvalidDataTitleDate();
         NewsSelectCategorySteps.selectNewsCategoryAd();
-        NewsScreen.titleTextInputOfNews.perform(replaceText(invalidDataTitle)); //заполнить заголовок
-        NewsScreen.titleTextInputOfNews.check(matches(withText(invalidDataTitle)));
-        NewsScreen.publicationDateTextInputOfNews.perform(replaceText(invalidPublishDate)); // ввести невалидную дату
-        NewsSteps.selectCurrentNewsTime();  //выбрать текущее время
-        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));   //заполнить описание
+        NewsScreen.titleTextInputOfNews.perform(replaceText(InvalidDataTitle));
+        NewsScreen.titleTextInputOfNews.check(matches(withText(InvalidDataTitle)));
+        NewsScreen.publicationDateTextInputOfNews.perform(replaceText(InvalidPublishDate));
+        NewsSteps.selectCurrentNewsTime();
+        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));
         NewsScreen.descriptionTextInputOfNews.check(matches(withText(Description)));
         ButtonSteps.saveButton();
+        pressBack();
 
-        pressBack();  //не сохранено
-        Thread.sleep(2000);
-        AuthorizationSteps.logOut();
 
     }
 
@@ -121,20 +116,17 @@ public class NewsCreationInvalidDataSectionControlPanelTest {
 
     public void checkingControlPanelCreatingNewsWithEmptyCategory() throws InterruptedException {
 
-        NewsSteps.goToNewsScreen();//перейти в раздел новостей
-        NewsCreationSteps.editNewsButton(); //добавить новость +
+        NewsSteps.goToNewsScreen();
+        NewsCreationSteps.editNewsButton();
         NewsCreationSteps.addNewsButton();
-        NewsScreen.titleTextInputOfNews.perform(replaceText(Title)); //заполнить заголовок
+        NewsScreen.titleTextInputOfNews.perform(replaceText(Title));
         NewsScreen.titleTextInputOfNews.check(matches(withText(Title)));
-        NewsSteps.selectCurrentNewsDate();  //выбрать текущую дату
-        NewsSteps.selectCurrentNewsTime();  //выбрать текущее время
-        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));   //заполнить описание
+        NewsSteps.selectCurrentNewsDate();
+        NewsSteps.selectCurrentNewsTime();
+        NewsScreen.descriptionTextInputOfNews.perform(replaceText(Description));
         NewsScreen.descriptionTextInputOfNews.check(matches(withText(Description)));
         ButtonSteps.saveButton();
-
-        //не сохранено
         pressBack();
-        AuthorizationSteps.logOut();
 
     }
 
